@@ -1,0 +1,21 @@
+// C++ code
+//LAB 1: print "Hello World!" in the Serial Monitor while 
+//turning ON the LED for 5 secs
+//then turning OFF the LED for another 5 secs
+//the loop goes on
+
+void setup()//to run ONCE
+{
+  Serial.begin(9600); //to initialize the serial communication 
+  pinMode(LED_BUILTIN, OUTPUT);// or pinMode(13, OUTPUT);
+  // also configures the specified pin to behave either INPUT OR OUTPUT
+}
+
+void loop()//to run REPEATEDLY
+{
+  digitalWrite(LED_BUILTIN, HIGH); //sets the LED ON
+  Serial.println("Hello World!"); //prints 
+  delay(5000); // Wait for 5000 millisecond(s)
+  digitalWrite(LED_BUILTIN, LOW); //sets the LED OFF
+  delay(5000); // Wait for 5000 millisecond(s)
+}
