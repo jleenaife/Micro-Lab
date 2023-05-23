@@ -1,0 +1,79 @@
+// This code will turn on an LED lamp corresponding to the input character.
+// If the input character is not a, b, c, d, or e, all LEDs will blink for 2 seconds and "ERROR, INPUT INVALID!" will be printed to the Serial Monitor.
+
+// Define the LED pins.
+const int LED_A_PIN = 2;
+const int LED_B_PIN = 3;
+const int LED_C_PIN = 4;
+const int LED_D_PIN = 5;
+const int LED_E_PIN = 6;
+
+// Define the input character.
+char inbyte;
+
+// The setup() function runs once, when the Arduino starts up.
+void setup() {
+
+  // Initialize the Serial Monitor.
+  Serial.begin(9600);
+
+  // Set the LED pins as outputs.
+  pinMode(LED_A_PIN, OUTPUT);
+  pinMode(LED_B_PIN, OUTPUT);
+  pinMode(LED_C_PIN, OUTPUT);
+  pinMode(LED_D_PIN, OUTPUT);
+  pinMode(LED_E_PIN, OUTPUT);
+}
+
+// The loop() function runs repeatedly, forever.
+void loop() {
+
+  Serial.println("\nEnter input: ");
+  // Wait for input from the user.
+  while (Serial.available() == 0) {}
+
+  // Read the input character.
+  inbyte = Serial.read();
+
+  // Check if the input character is a, b, c, d, or e.
+  if (inbyte == 'a' || inbyte == 'b' || inbyte == 'c' || inbyte == 'd' || inbyte == 'e') {
+    // Turn on the corresponding LED.
+    if (inbyte == 'a') {
+      digitalWrite(LED_A_PIN, HIGH);
+    } else if (inbyte == 'b') {
+      digitalWrite(LED_B_PIN, HIGH);
+    } else if (inbyte == 'c') {
+      digitalWrite(LED_C_PIN, HIGH);
+    } else if (inbyte == 'd') {
+      digitalWrite(LED_D_PIN, HIGH);
+    } else if (inbyte == 'e') {
+      digitalWrite(LED_E_PIN, HIGH);
+    }
+
+    // Turn off all other LEDs.
+    digitalWrite(LED_A_PIN, LOW);
+    digitalWrite(LED_B_PIN, LOW);
+    digitalWrite(LED_C_PIN, LOW);
+    digitalWrite(LED_D_PIN, LOW);
+    digitalWrite(LED_E_PIN, LOW);
+  } else {
+    // Blink all LEDs for 2 seconds.
+    for (int i = 0; i < 2; i++) {
+      digitalWrite(LED_A_PIN, HIGH);
+      digitalWrite(LED_B_PIN, HIGH);
+      digitalWrite(LED_C_PIN, HIGH);
+      digitalWrite(LED_D_PIN, HIGH);
+      digitalWrite(LED_E_PIN, HIGH);
+      delay(500);
+      digitalWrite(LED_A_PIN, LOW);
+      digitalWrite(LED_B_PIN, LOW);
+      digitalWrite(LED_C_PIN, LOW);
+      digitalWrite(LED_D_PIN, LOW);
+      digitalWrite(LED_E_PIN, LOW);
+      delay(500);
+    }
+
+    // Print an error message to the Serial Monitor.
+    Serial.println("ERROR, INPUT INVALID!");
+  }
+}

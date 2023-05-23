@@ -1,0 +1,47 @@
+//LAB 2 PART 4
+//1) Screen Monitor will display:
+//a. Text ON (Button Pressed) & OFF (Button Released)
+//b. Counts how many times the button was released
+
+//2)
+//a. Max. Presses = 5
+//b. When limit is done:
+//i. stop the light from turning on and off when the button is
+//pressed.
+//ii. print "ALL DONE!"
+//iii. Only print "ALL DONE!" twice on separate lines
+
+
+#define BUTTON 12
+int counter = 1;
+int currentState = 0;
+int lastState = 0;
+//These lines declare three variables: counter, currentState,
+//and lastState. counter is an integer that will be used to
+//keep track of the number of times the button has been pressed. currentState is an integer that will be used to store the current state of the button. lastState is an integer that will be used to store the previous state of the button.
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(BUTTON, INPUT);
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  while (counter < 6) {
+    lastState = currentState;
+    currentState = digitalRead(BUTTON);
+    if (currentState == 1 && lastState == 0) {
+      Serial.println("Button Pressed!");
+    }
+    if (currentState == 0 && lastState == 1) {
+      Serial.println("Button Released!");
+      Serial.println(counter);
+      counter++;
+    }
+  }
+  Serial.println("ALL DONE!");
+  Serial.println("ALL DONE!");
+
+  delay(1000);
+  exit(0);
+}
