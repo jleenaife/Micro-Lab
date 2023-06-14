@@ -1,0 +1,65 @@
+//write a program that first read in two values from the keyboard, a starting value and an ending value. it should sum all the even numbers between those //two values including the endpoints and display the sum. if the ending point is less than the starting point, the sum should be 0.
+
+int startValue;
+int endValue;
+int sum = 0;
+
+
+void setup() {
+  // Initialize the serial port
+  Serial.begin(9600);
+}
+
+void loop() {
+  Serial.print("Enter the starting value: ");
+  while (Serial.available() == 0) {}
+  startValue = Serial.parseInt();
+  Serial.println(startValue);
+
+  Serial.print("Enter the ending value: ");
+  while (Serial.available() == 0) {}
+  endValue = Serial.parseInt();
+  Serial.println(endValue);
+
+  if (endValue < startValue) {
+    // If the ending value is less than the starting value, set the sum to zero
+    sum = 0;
+  } 
+  else {
+    // Otherwise, loop through all the even numbers between the starting and ending values and add them to the sum
+    for (int i = startValue; i <= endValue; i += 2) {
+      sum += i;
+    }
+  }
+
+  Serial.print("The sum of all events = ");
+  Serial.println(sum);
+  
+  try_again();
+
+}
+
+void try_again() {
+  // Ask the user if they want to try again
+  Serial.println("\nWould you like to try again? (y/n)");
+  while (Serial.available() == 0) {}
+  char answer = Serial.read();
+
+  // If the user wants to try again, clear the variables and start over
+  if (answer == 'y' || answer == 'Y' || answer == '0') {
+    loop();
+  }
+
+  else if (answer == 'n' || answer == 'N' || answer == '1') {
+    // Otherwise, exit the program
+    Serial.println("Goodbye!");
+    //return;
+    delay(1000);
+    exit(0);
+  }
+
+  else {
+    Serial.println("Ivalid input.");
+    try_again();
+  }
+}

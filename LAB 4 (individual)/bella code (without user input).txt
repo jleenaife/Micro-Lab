@@ -1,0 +1,39 @@
+// C++ code
+// create a program that populates an integer array with 10 elements. the program will locate the index 
+int myArray[10]; // create an empty array
+
+void setup() {
+  Serial.begin(9600);
+  for (int i = 0; i < 10; i++) { // loop from 0 to 9
+    myArray[i] = random(100); // assign a random value between 0 and 99 to each element
+    Serial.print(myArray[i]); // print the element
+    Serial.print(" "); // print a space
+  }
+  Serial.println(); // print a new line
+}
+
+void loop() {
+  int value = 58; // the value to search for
+  int index = findIndex(myArray, value); // call the function to find the index
+  if (index != -1) { // if the index is not -1
+    Serial.print("The value ");
+    Serial.print(value);
+    Serial.print(" is found at index ");
+    Serial.println(index);
+  } else { // if the index is -1
+    Serial.print("The value ");
+    Serial.print(value);
+    Serial.println(" is not found in the array");
+  }
+  delay(5000); // wait for 5 seconds
+}
+
+// a function that takes an array and a value as parameters and returns the index of the value in the array, or -1 if not found
+int findIndex(int array[], int value) {
+  for (int i = 0; i < 10; i++) { // loop through the array
+    if (array[i] == value) { // if the element matches the value
+      return i; // return the index of the element
+    }
+  }
+  return -1; // return -1 if no match is found
+}

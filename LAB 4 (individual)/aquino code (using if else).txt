@@ -1,0 +1,83 @@
+//Write a sketch in arduino that asks a user to enter his weight and the name of a planet. The algorithm was then to output how much the user would weight //on that planet.
+
+// Declare variables
+float weight;
+String planet;
+
+void setup() {
+  // Initialize the serial port
+  Serial.begin(9600);
+
+  // Print a welcome message
+  Serial.println("Welcome to the Planet Weight Calculator!");
+}
+
+void loop() {
+  // Get the user's weight
+  Serial.println("What is your weight?");
+  while (Serial.available() == 0) {}
+  weight = Serial.parseFloat();
+
+  // Get the name of the planet
+  Serial.println("What planet do you want to weigh on?");
+  while (Serial.available() == 0) {}
+  planet = Serial.readString();
+
+  // Calculate the user's weight on the planet
+  float gravity = 0;
+  if (planet == "Mercury") {
+    gravity = 3.701;
+  } else if (planet == "Venus" || planet == "venus"  || planet == "VENUS") {
+    gravity = 8.87;
+  } else if (planet == "Earth") {
+    gravity = 9.807;
+  } else if (planet == "Mars") {
+    gravity = 3.711;
+  } else if (planet == "Jupiter") {
+    gravity = 26.518;
+  } else if (planet == "Saturn") {
+    gravity = 10.44;
+  } else if (planet == "Uranus") {
+    gravity = 8.869;
+  } else if (planet == "Neptune") {
+    gravity = 11.15;
+  } else {
+    Serial.println("Invalid planet.");
+    return;
+  }
+
+  // Print the user's weight on the planet
+  float weightOnPlanet = weight * gravity;
+  Serial.print("Your weight on ");
+  Serial.print(planet);
+  Serial.print(" would be ");
+  Serial.print(weightOnPlanet);
+  Serial.println(" pounds.");
+  
+  try_again();
+}
+
+void try_again() {
+  // Ask the user if they want to try again
+  Serial.println("\nWould you like to try again? (y/n)");
+  while (Serial.available() == 0) {}
+  char answer = Serial.read();
+
+  // If the user wants to try again, clear the variables and start over
+  if (answer == 'y' || answer == 'Y' || answer == '0') {
+    loop();
+  }
+
+  else if (answer == 'n' || answer == 'N' || answer == '1') {
+    // Otherwise, exit the program
+    Serial.println("Goodbye!");
+    //return;
+    delay(1000);
+    exit(0);
+  }
+
+  else {
+    Serial.println("Ivalid input.");
+    try_again();
+  }
+}

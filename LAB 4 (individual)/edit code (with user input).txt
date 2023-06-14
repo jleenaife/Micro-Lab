@@ -1,0 +1,81 @@
+//Write a sketch in arduino that reads a sequence of integers 
+//and counts how many times the number 55 occurs. 
+//Print the count. For example, if the user input the number 
+//of integers to be processed as 8 and the integer you are 
+//to search from, with input values from 55 25 1004 4 -6 55 0 55, 
+//the output should be 3 because there were 3 55's in the input stream. 
+//Your program should work for any input, not just this example.
+
+void setup() {
+  // initialize serial communication at 9600 bits per second:
+  Serial.begin(9600);
+}
+
+void loop() {
+  // prompt the user for the number of integers to be processed
+  Serial.print("Enter the number of integers to be processed: ");
+  
+  // wait until the user enters something
+  while (Serial.available() == 0) {
+  }
+  
+  // read the number entered by the user and convert it to an int
+  int n = Serial.parseInt();
+  Serial.println(n);
+  
+  // initialize a variable to store the count of 55s
+  int count = 0;
+  
+  // loop through n times
+  for (int i = 0; i < n; i++) {
+    // prompt the user for an integer
+    Serial.print("Enter an integer: ");
+    
+    // wait until the user enters something
+    while (Serial.available() == 0) {
+    }
+    
+    // read the integer entered by the user and convert it to an int
+    int x = Serial.parseInt();
+    Serial.println(x);
+    
+    
+    // check if the integer is equal to 55
+    if (x == 55) {
+      // increment the count by one
+      count++;
+    }
+  }
+  
+  // print the count of 55s to the serial monitor
+  Serial.print("The count of 55s is: ");
+  Serial.println(count);
+  
+  try_again();
+  
+}
+
+void try_again() {
+  // Ask the user if they want to try again
+  Serial.println("\nWould you like to try again? (y/n)");
+  while (Serial.available() == 0) {}
+  char answer = Serial.read();
+
+  // If the user wants to try again, clear the variables and start over
+  if (answer == 'y' || answer == 'Y' || answer == '0') {
+    loop();
+  }
+
+  else if (answer == 'n' || answer == 'N' || answer == '1') {
+    // Otherwise, exit the program
+    Serial.println("Goodbye!");
+    //return;
+    delay(1000);
+    exit(0);
+  }
+
+  else {
+    Serial.println("Ivalid input.");
+    try_again();
+  }
+}
