@@ -1,0 +1,20 @@
+Create a circuit that will use a keypad and Serial Monitor. The program will diSplay a main menu as shown below and do everything when the keypad is pressed.
+
+1. Pyramid of stars (user input)
+2. Draw a square (user input)
+3. Fibonacci Numbers Series (user input)
+4. Multiplication Table up to 10 (user input)
+5. Solve the surface area of a cone (user input)
+6. It will print the logo og LV using *
+7. Will light up 8 LEDs from left to right for 3 secs
+8. Will blink 4 LEDs from Left then blink 4 LEDs from Right
+9. It will display an error then will blink all LEDs for 2 secs
+0. It will just display in Serial Monitor, "INVALID CODE!!!"
+*. It will display in Serial Monitor "*"
+#. It will display in Serial Monitor "#"
+A. Count the number of characters in your name
+B. Solve for velocity
+C. Print the value of pi decimal base
+D. Solve for the average
+
+Note: Every user input will display "do you want to try again? Y/N"

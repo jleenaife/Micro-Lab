@@ -1,0 +1,697 @@
+// C++ code
+//
+#include <Keypad.h>
+
+#define l1 2
+#define l2 3
+#define l3 12
+#define l4 13
+#define l5 A5
+#define l6 A4
+#define l7 A3
+#define l8 A2
+
+
+int user_input;
+
+char answer;
+
+const byte ROWS = 4;
+const byte COLUMNS = 4;
+
+char keys[ROWS][COLUMNS] = {
+  {'1','2','3','A'},
+  {'4','5','6','B'},
+  {'7','8','9','C'},
+  {'*','0','#','D'}
+};
+
+byte rowPins[ROWS] = {11,10,9,8};
+byte colPins[COLUMNS] = {7,6,5,4};
+
+Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, ROWS, COLUMNS);
+
+void setup()
+{
+  Serial.begin(9600);
+  pinMode(13, OUTPUT);
+  pinMode(12, OUTPUT);
+  pinMode(3, OUTPUT);
+  pinMode(2, OUTPUT);
+
+  pinMode(l1, OUTPUT);
+  pinMode(l2, OUTPUT);
+  pinMode(l3, OUTPUT);
+  pinMode(l4, OUTPUT);
+  pinMode(l5, OUTPUT);
+  pinMode(l6, OUTPUT);
+  pinMode(l7, OUTPUT);
+  pinMode(l8, OUTPUT);
+
+  restart_payter();
+
+}
+
+void loop()
+{
+
+    char key = keypad.getKey();
+    switch(key){
+      case '1':
+        pyramid();
+        break;
+
+      case '2':
+        square();
+        break;
+
+      case '3':
+        fibonacci();
+        break;
+
+      case '4':
+        multiplication();
+        break;
+
+      case '5':
+        surfaceArea();
+        break;
+
+      case '6':
+        LV();
+        break;
+
+      case '7':
+        leftRight();
+        break;
+
+      case '8':
+        blink();
+        break;
+
+      case '9':
+        errorHandling();
+        break;
+
+      case '0':
+        zero();
+        break;
+
+      case '*':
+        asterisk();
+        break;
+
+      case '#':
+        numberSign();
+        break;
+
+      case 'A':
+        name();
+        break;
+
+      case 'B':
+        velocity();
+        break;
+
+      case 'C':
+        pi();
+        break;
+
+      case 'D':
+        average();
+        break;
+
+
+  }
+
+}
+
+
+void restart_payter(){
+  Serial.println();
+  Serial.println("<<<<<Choose your payter>>>>>");
+  Serial.println("1. Pyramid of Stars");
+  Serial.println("2. Draw a Square");
+  Serial.println("3. Fibonacci Number Series");
+  Serial.println("4. Multiplication table");
+  Serial.println("5. Solve the Surface Area of a Cone");
+  Serial.println("6. It will print the logo of Louis Vuitton using *");
+  Serial.println("7. Will light up 8 LED from left to right for 3 seconds.");
+  Serial.println("8. Will blink 4 LED from the left, then blink 4 LED from the right.");
+  Serial.println("9. It will display an error, then will blink LED for 2 seconds.");
+  Serial.println("0. It will just display in serial monitor INVALID CODE!!!");
+  Serial.println("*. It will just display in serial monitor");
+  Serial.println("#. It will just display in serial monitor");
+  Serial.println("A. Enter your name () - it will count the no. of characters");
+  Serial.println("B. Computes the velocity of an object");
+  Serial.println("C. Print the value of PI decimal base");
+  Serial.println("D. Solve for the average.");
+  Serial.println();
+  Serial.println("Press your chosen payter on keypad");
+  Serial.println();
+
+}
+
+
+void pyramid(){
+        Serial.println("1. Pyramid of Stars");
+        int numRows;
+        Serial.println("Enter the number of rows for the pyramid:");
+        while (!Serial.available()) {
+        }
+        numRows = Serial.parseInt();
+
+        while (Serial.available()) {
+          Serial.read();
+        }
+
+        for (int i = 1; i <= numRows; i++) {
+          // Print stars
+          for (int j = 1; j <= i; j++) {
+            Serial.print("*");
+          }
+
+          Serial.println();
+        }
+      
+      Serial.println();
+      Serial.println("Do you want to try again? Y/N");
+      while (Serial.available() == 0){};
+      answer = Serial.read();
+      if (answer == 'Y'){
+        restart_payter();
+      }
+      else if (answer == 'N'){
+        exit(0);
+      }
+}
+
+
+void square(){
+        Serial.println("2. Draw a Square");
+        int sideLength;
+        Serial.println("Enter the side length for the square:");
+        while (!Serial.available()) {
+        }
+        sideLength = Serial.parseInt();
+
+        while (Serial.available()) {
+          Serial.read();
+        }
+
+        for (int i = 1; i <= sideLength; i++) {
+          for (int j = 1; j <= sideLength; j++) {
+            if (i == 1 || i == sideLength || j == 1 || j == sideLength) {
+              Serial.print("*");
+            } 
+            else {
+              Serial.print(" ");
+            }
+          }
+          Serial.println();
+        }
+
+      Serial.println();
+      Serial.println("Do you want to try again? Y/N");
+      while (Serial.available() == 0){};
+      answer = Serial.read();
+      if (answer == 'Y'){
+        restart_payter();
+      }
+      else if (answer == 'N'){
+        exit(0);
+      }
+}
+
+
+void fibonacci(){
+      Serial.println("3. Fibonacci Number Series");
+      int numTerms;
+      Serial.println("Enter the number of terms for the Fibonacci sequence:");
+      while (!Serial.available()) {
+      }
+      numTerms = Serial.parseInt();
+
+      while (Serial.available()) {
+        Serial.read();
+      }
+
+      int firstTerm = 0;
+      int secondTerm = 1;
+
+      Serial.print("Fibonacci sequence: ");
+      Serial.print(firstTerm);
+      Serial.print(", ");
+      Serial.print(secondTerm);
+
+      for (int i = 3; i <= numTerms; i++) {
+        int nextTerm = firstTerm + secondTerm;
+        Serial.print(", ");
+        Serial.print(nextTerm);
+
+        firstTerm = secondTerm;
+        secondTerm = nextTerm;
+      }
+
+    Serial.println();
+    Serial.println("Do you want to try again? Y/N");
+    while (Serial.available() == 0){};
+    answer = Serial.read();
+    if (answer == 'Y'){
+      restart_payter();
+    }
+    else if (answer == 'N'){
+      exit(0);
+    }
+}
+
+void multiplication(){
+      Serial.println("4. Multiplication table");
+
+      int number;
+
+      Serial.println("Enter a number:");
+      while (!Serial.available()) {
+      }
+      number = Serial.parseInt();
+
+      while (Serial.available()) {
+        Serial.read();
+      }
+
+      Serial.print("Sequence: ");
+      for (int i = 1; i <= 10; i++) {
+        int result = number * i;
+        Serial.print(result);
+        Serial.print(" ");
+      }
+
+      Serial.println();
+      Serial.println("Do you want to try again? Y/N");
+      while (Serial.available() == 0){};
+      answer = Serial.read();
+      if (answer == 'Y'){
+        restart_payter();
+      }
+      else if (answer == 'N'){
+        exit(0);
+      }
+}
+
+void surfaceArea(){
+      Serial.println("5. Solve the Surface Area of a Cone");
+      float radius, height;
+
+      Serial.println("Enter the radius of the cone:");
+      while (!Serial.available()) {
+      }
+      radius = Serial.parseFloat();
+      Serial.println(radius);
+
+      while (Serial.available()) {
+        Serial.read();
+      }
+
+      Serial.println("Enter the height of the cone:");
+      while (!Serial.available()) {
+      }
+      height = Serial.parseFloat();
+      Serial.println(height);
+
+      while (Serial.available()) {
+        Serial.read();
+      }
+
+      // float slantHeight = sqrt(radius * radius + height * height);
+      float surfaceArea = (PI * radius * height) + (PI * (radius * radius));
+
+      Serial.print("Surface Area: ");
+      Serial.println(surfaceArea);
+      
+      Serial.println();
+      Serial.println("Do you want to try again? Y/N");
+      while (Serial.available() == 0){};
+      answer = Serial.read();
+      if (answer == 'Y'){
+        restart_payter();
+      }
+      else if (answer == 'N'){
+        exit(0);
+      }
+}
+
+void LV(){
+  Serial.println("6. It will print the logo of Louis Vuitton using *");
+  Serial.println("****     ****");
+  Serial.println("  *   *   *");
+  Serial.println("   * *   *");
+  Serial.println("    *   *");
+  Serial.println("   * * *");
+  Serial.println("  *   *    ");
+  Serial.println(" *         * ");
+  Serial.println("***********");
+
+  
+}
+
+void leftRight(){
+
+    digitalWrite(l1, HIGH);
+    digitalWrite(l2, LOW);
+    digitalWrite(l3, LOW);
+    digitalWrite(l4, LOW);
+    digitalWrite(l5, LOW);
+    digitalWrite(l6, LOW);
+    digitalWrite(l7, LOW);
+    digitalWrite(l8, LOW);
+    delay(370);
+
+    digitalWrite(l1, LOW);
+    digitalWrite(l2, HIGH);
+    digitalWrite(l3, LOW);
+    digitalWrite(l4, LOW);
+    digitalWrite(l5, LOW);
+    digitalWrite(l6, LOW);
+    digitalWrite(l7, LOW);
+    digitalWrite(l8, LOW);
+    delay(370);
+
+    digitalWrite(l1, LOW);
+    digitalWrite(l2, LOW);
+    digitalWrite(l3, HIGH);
+    digitalWrite(l4, LOW);
+    digitalWrite(l5, LOW);
+    digitalWrite(l6, LOW);
+    digitalWrite(l7, LOW);
+    digitalWrite(l8, LOW);
+    delay(370);
+    
+    digitalWrite(l1, LOW);
+    digitalWrite(l2, LOW);
+    digitalWrite(l3, LOW);
+    digitalWrite(l4, HIGH);
+    digitalWrite(l5, LOW);
+    digitalWrite(l6, LOW);
+    digitalWrite(l7, LOW);
+    digitalWrite(l8, LOW);
+    delay(370);
+
+    digitalWrite(l1, LOW);
+    digitalWrite(l2, LOW);
+    digitalWrite(l3, LOW);
+    digitalWrite(l4, LOW);
+    digitalWrite(l5, HIGH);
+    digitalWrite(l6, LOW);
+    digitalWrite(l7, LOW);
+    digitalWrite(l8, LOW);
+    delay(370);
+
+    digitalWrite(l1, LOW);
+    digitalWrite(l2, LOW);
+    digitalWrite(l3, LOW);
+    digitalWrite(l4, LOW);
+    digitalWrite(l5, LOW);
+    digitalWrite(l6, HIGH);
+    digitalWrite(l7, LOW);
+    digitalWrite(l8, LOW);
+    delay(370);
+
+    digitalWrite(l1, LOW);
+    digitalWrite(l2, LOW);
+    digitalWrite(l3, LOW);
+    digitalWrite(l4, LOW);
+    digitalWrite(l5, LOW);
+    digitalWrite(l6, LOW);
+    digitalWrite(l7, HIGH);
+    digitalWrite(l8, LOW);
+    delay(370);
+
+    digitalWrite(l1, LOW);
+    digitalWrite(l2, LOW);
+    digitalWrite(l3, LOW);
+    digitalWrite(l4, LOW);
+    digitalWrite(l5, LOW);
+    digitalWrite(l6, LOW);
+    digitalWrite(l7, LOW);
+    digitalWrite(l8, HIGH);
+    delay(370);
+
+    digitalWrite(l1, LOW);
+    digitalWrite(l2, LOW);
+    digitalWrite(l3, LOW);
+    digitalWrite(l4, LOW);
+    digitalWrite(l5, LOW);
+    digitalWrite(l6, LOW);
+    digitalWrite(l7, LOW);
+    digitalWrite(l8, LOW);
+
+}
+
+
+void blink(){
+
+    Serial.println("8. Will blink 4 LED from the left, then blink 4 LED from the right.");
+    digitalWrite(l1, HIGH);
+    digitalWrite(l2, HIGH);
+    digitalWrite(l3, HIGH);
+    digitalWrite(l4, HIGH);
+    digitalWrite(l5, LOW);
+    digitalWrite(l6, LOW);
+    digitalWrite(l7, LOW);
+    digitalWrite(l8, LOW);
+    delay(1000);
+
+    digitalWrite(l1, LOW);
+    digitalWrite(l2, LOW);
+    digitalWrite(l3, LOW);
+    digitalWrite(l4, LOW);
+    digitalWrite(l5, HIGH);
+    digitalWrite(l6, HIGH);
+    digitalWrite(l7, HIGH);
+    digitalWrite(l8, HIGH);
+    delay(1000);
+
+    digitalWrite(l1, LOW);
+    digitalWrite(l2, LOW);
+    digitalWrite(l3, LOW);
+    digitalWrite(l4, LOW);
+    digitalWrite(l5, LOW);
+    digitalWrite(l6, LOW);
+    digitalWrite(l7, LOW);
+    digitalWrite(l8, LOW);
+
+
+}
+
+
+void errorHandling() {
+  Serial.println("Error! Error! Error!");
+
+  unsigned long startTime = millis();
+
+  while (millis() - startTime < 2000) {
+    digitalWrite(l1, HIGH);
+    digitalWrite(l2, HIGH);
+    digitalWrite(l3, HIGH);
+    digitalWrite(l4, HIGH);
+    digitalWrite(l5, HIGH);
+    digitalWrite(l6, HIGH);
+    digitalWrite(l7, HIGH);
+    digitalWrite(l8, HIGH);
+    delay(250);
+
+    digitalWrite(l1, LOW);
+    digitalWrite(l2, LOW);
+    digitalWrite(l3, LOW);
+    digitalWrite(l4, LOW);
+    digitalWrite(l5, LOW);
+    digitalWrite(l6, LOW);
+    digitalWrite(l7, LOW);
+    digitalWrite(l8, LOW);
+    delay(250);
+
+  }
+}
+
+void zero(){
+  Serial.println("0. It will just display in serial monitor INVALID CODE!!!");
+  Serial.println("INVALID CODE");
+  Serial.println();
+
+}
+
+
+void asterisk(){
+  Serial.println("*. It will just display in serial monitor");
+  Serial.println("*");
+  Serial.println();
+
+}
+
+void numberSign(){
+  Serial.println("#. It will just display in serial monitor");
+  Serial.println("#");
+  Serial.println();
+}
+
+void name(){
+  String name;
+
+  Serial.println("A. Enter your name () - it will count the no. of characters");
+  Serial.println("Enter your name:");
+  while (!Serial.available()) {
+  }
+  name = Serial.readString();
+
+  while (Serial.available()) {
+    Serial.read();
+  }
+  Serial.println(name);
+
+  int numLetters = 0;
+  for (int i = 0; i < name.length(); i++) {
+    if (isAlpha(name.charAt(i))) {
+      numLetters++;
+    }
+  }
+
+  Serial.print("Number of letters in your name: ");
+  Serial.println(numLetters);
+  Serial.read();
+
+  Serial.println();
+  Serial.println("Do you want to try again? Y/N");
+  while (Serial.available() == 0){};
+  answer = Serial.read();
+  if (answer == 'Y'){
+    restart_payter();
+  }
+  else if (answer == 'N'){
+    exit(0);
+  }
+  
+}
+
+
+
+void velocity(){
+  float distance, time;
+
+  Serial.println("B. Computes the velocity of an object");
+  Serial.println("Enter the distance (meters):");
+  while (!Serial.available()) {
+  }
+  distance = Serial.parseFloat();
+
+  while (Serial.available()) {
+    Serial.read();
+  }
+
+  Serial.println("Enter the time (seconds):");
+  while (!Serial.available()) {
+  }
+  time = Serial.parseFloat();
+
+  while (Serial.available()) {
+    Serial.read();
+  }
+
+  float velocity = distance / time;
+
+  Serial.print("Velocity: ");
+  Serial.print(velocity);
+  Serial.println(" m/s");
+
+  Serial.println();
+  Serial.println("Do you want to try again? Y/N");
+  while (Serial.available() == 0){};
+  answer = Serial.read();
+  if (answer == 'Y'){
+    restart_payter();
+  }
+  else if (answer == 'N'){
+    exit(0);
+  }
+}
+
+void pi(){
+  int decimalPlaces;
+
+  Serial.println("C. Print the value of PI decimal base");
+  Serial.println("Enter decimal places for PI:");
+  while (!Serial.available()) {
+  }
+  decimalPlaces = Serial.parseInt();
+
+  while (Serial.available()) {
+    Serial.read();
+  }
+
+  double pi = 0.0;
+  for (int i = 0; i <= decimalPlaces; i++) {
+    pi += (1.0 / (16.0 * i + 1.0)) * (4.0 / (8.0 * i + 1.0) - 2.0 / (8.0 * i + 4.0) - 1.0 / (8.0 * i + 5.0) - 1.0 / (8.0 * i + 6.0));
+  }
+
+  Serial.print("Decimal Places: ");
+  Serial.println(decimalPlaces);
+  Serial.println(pi, decimalPlaces);
+
+  Serial.println();
+  Serial.println("Do you want to try again? Y/N");
+  while (Serial.available() == 0){};
+  answer = Serial.read();
+  if (answer == 'Y'){
+    restart_payter();
+  }
+  else if (answer == 'N'){
+    exit(0);
+  }
+}
+
+
+void average(){
+
+  int numCount;
+  float sum = 0;
+
+  Serial.println("D. Solve for the average.");
+  Serial.println("Enter the number count:");
+  while (!Serial.available()) {
+  }
+  numCount = Serial.parseInt();
+
+  while (Serial.available()) {
+    Serial.read();
+  }
+
+  Serial.println("Enter the numbers:");
+  for (int i = 1; i <= numCount; i++) {
+    while (!Serial.available()) {
+    }
+    float num = Serial.parseFloat();
+    sum += num;
+    Serial.print(i);
+    Serial.print(": ");
+    Serial.println(num);
+  }
+
+  while (Serial.available()) {
+    Serial.read();
+  }
+
+  float average = sum / numCount;
+
+  Serial.print("Average: ");
+  Serial.println(average);
+
+  Serial.println();
+  Serial.println("Do you want to try again? Y/N");
+  while (Serial.available() == 0){};
+  answer = Serial.read();
+  if (answer == 'Y'){
+    restart_payter();
+  }
+  else if (answer == 'N'){
+    exit(0);
+  }
+}

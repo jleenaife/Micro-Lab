@@ -1,0 +1,281 @@
+#include <Keypad.h>
+
+#define LED1 10
+#define LED2 11
+#define LED3 12
+#define LED4 13
+#define LED5 A1
+#define LED6 A2
+#define LED7 A3
+#define LED8 A4
+
+int LEDs[8] = { LED1, LED2, LED3, LED4, LED5, LED6, LED7, LED8 };
+
+const byte ROWS = 4; // Number of rows in the keypad
+const byte COLS = 3; // Number of columns in the keypad
+
+// Define the keypad buttons
+char keys[ROWS][COLS] = {
+  {'1', '2', '3',},
+  {'4', '5', '6',},
+  {'7', '8', '9',},
+  {'*', '0', '#',}
+};
+
+// Connect keypad pins to the Arduino digital pins
+byte rowPins[ROWS] = {9, 8, 7, 6};
+byte colPins[COLS] = {5, 4, 3,};
+
+// Create the Keypad object
+Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, ROWS, COLS);
+
+// Function prototypes
+void displayMainMenu();
+void handleInput(char input);
+
+void setup() {
+  Serial.begin(9600); // Initialize Serial Monitor
+  displayMainMenu(); // Display the main menu
+}
+
+void loop() {
+  char key = keypad.getKey(); // Read keypad input
+
+  if (key != NO_KEY) {
+    handleInput(key); // Handle the input
+  }
+}
+
+// Function to display the main menu
+void displayMainMenu() {
+  Serial.println("Main Menu");
+  Serial.println("1. Pyramid of stars");
+  Serial.println("2. Draw a square");
+  Serial.println("3. Fibonacci Numbers Series");
+  Serial.println("4. Multiplication Table up to 10");
+  Serial.println("5. Solve the surface area of a cone");
+  Serial.println("6. Print the logo of LV using *");
+  Serial.println("7. Light up 8 LEDs from left to right for 3 secs");
+  Serial.println("8. Blink 4 LEDs from Left then blink 4 LEDs from Right");
+  Serial.println("9. Display an error and blink all LEDs for 2 secs");
+  Serial.println("0. INVALID CODE!!!");
+  Serial.println("*. Display *");
+  Serial.println("#. Display #");
+}
+
+// Function to handle the user input
+void handleInput(char input) {
+  Serial.print("You selected: ");
+
+  if (input == '1') {
+    Serial.println("Pyramid of stars");
+    Serial.println("\n1 - Pyramid of stars");
+      Serial.print("Enter a number: ");
+      while (!Serial.available()) {}
+      int num = Serial.parseInt();
+      Serial.println(num);
+      Serial.print("\n");
+      for (int i = 0; i < num; i++) {
+        for (int j = 0; j <= i; j++) {
+          Serial.print("*");
+        }
+        Serial.print("\n");
+      }
+    try_again();
+  }
+  else if (input == '2') {
+    Serial.println("Draw a square");
+    Serial.print("Enter a number: ");
+      while (!Serial.available()) {}
+      int num = Serial.parseInt();
+      Serial.println(num);
+      Serial.println();
+
+      for (int i = 0; i < num; i++) {
+        Serial.print("* ");
+      }
+      Serial.println();
+
+      for (int i = 0; i < num - 2; i++) {
+        Serial.print("*");
+        for (int j = 0; j < num * 2 - 3; j++) {
+          Serial.print(" ");
+        }
+        Serial.println("*");
+      }
+
+      for (int i = 0; i < num; i++) {
+        Serial.print("* ");
+      }
+    try_again();
+  }
+  else if (input == '3') {
+    Serial.println("Fibonacci Numbers Series");
+    Serial.print("Enter a number: ");
+      while (!Serial.available()) {}
+      int num = Serial.parseInt();
+      int sequence[num];
+      sequence[0] = 0;
+      sequence[1] = 1;
+
+      Serial.print(sequence[0]);
+      Serial.print(", ");
+      Serial.print(sequence[1]);
+
+      for (int i = 2; i < num; i++) {
+        sequence[i] = sequence[i - 1] + sequence[i - 2];
+        Serial.print(", ");
+        Serial.print(sequence[i]);
+      }
+    try_again();
+  }
+  else if (input == '4') {
+    Serial.println("Multiplication Table up to 10");
+    Serial.print("Enter a number: ");
+      while (!Serial.available()) {}
+      int num = Serial.parseInt();
+      Serial.print(num);
+      Serial.print("\n");
+      for (int i = 1; i <= 10; i++) {
+        Serial.print(num * i);
+        Serial.print(" ");
+      }
+    try_again();
+  }
+  else if (input == '5') {
+    Serial.println("Solve the surface area of a cone");
+    Serial.print("Enter the Radius: ");
+      while (Serial.available() == 0) {}
+      float radius = Serial.parseFloat();
+      Serial.println(radius);
+
+      Serial.print("Enter the Height: ");
+      while (Serial.available() == 0) {}
+      float height = Serial.parseFloat();
+      Serial.println(height);
+
+      float area = (PI * radius * height) + (PI * (radius * radius));
+      Serial.print("Surface area of the cone: ");
+      Serial.println(area);
+    try_again();
+  }
+  else if (input == '6') {
+    Serial.println("Print the logo of LV using *");
+    Serial.println("*********                 ******");
+    Serial.println("  *****    **********      *** ");
+    Serial.println("   *****     ******       ***  ");
+    Serial.println("    *****   ******       ***   ");
+    Serial.println("     ***** ******       ***    ");
+    Serial.println("      **********       ***     ");
+    Serial.println("       ********       ***      ");
+    Serial.println("        ******       ***       ");
+    Serial.println("        *****       ***        ");
+    Serial.println("       *******     ***         ");
+    Serial.println("      *********   ***          ");
+    Serial.println("     ***** ***** ***           ");
+    Serial.println("    *****   *******     ***    ");
+    Serial.println("   *****              ****     ");
+    Serial.println("**************************      ");
+  }
+  else if (input == '7') {
+    Serial.println("Light up 8 LEDs from left to right for 3 secs");
+    for (int i = 0; i < 8; i++) {
+      digitalWrite(LEDs[i], HIGH);
+      delay(3000 / 8);
+      digitalWrite(LEDs[i], LOW);
+    }
+  }
+  else if (input == '8') {
+    Serial.println("Blink 4 LEDs from Left then blink 4 LEDs from Right");
+    for (int i = 0; i < 4; i++) {
+      digitalWrite(LEDs[i], 1);
+    }
+    delay(500);
+    for (int i = 0; i < 4; i++) {
+      digitalWrite(LEDs[i], 0);
+    }
+    for (int i = 7; i >= 4; i--) {
+      digitalWrite(LEDs[i], 1);
+    }
+    delay(500);
+    for (int i = 7; i >= 4; i--) {
+      digitalWrite(LEDs[i], 0);
+    }
+    for (int i = 0; i < 4; i++) {
+      digitalWrite(LEDs[i], 1);
+    }
+    delay(500);
+    for (int i = 0; i < 4; i++) {
+      digitalWrite(LEDs[i], 0);
+    }
+    for (int i = 7; i >= 4; i--) {
+      digitalWrite(LEDs[i], 1);
+    }
+    delay(500);
+    for (int i = 7; i >= 4; i--) {
+      digitalWrite(LEDs[i], 0);
+    }
+    for (int i = 0; i < 4; i++) {
+      digitalWrite(LEDs[i], 1);
+    }
+    delay(500);
+    for (int i = 0; i < 4; i++) {
+      digitalWrite(LEDs[i], 0);
+    }
+    for (int i = 7; i >= 4; i--) {
+      digitalWrite(LEDs[i], 1);
+    }
+    delay(500);
+    for (int i = 7; i >= 4; i--) {
+      digitalWrite(LEDs[i], 0);
+    }
+  }
+  else if (input == '9') {
+    Serial.println("Display an error and blink all LEDs for 2 secs");
+    Serial.println("Error! You pressed 9!");
+    for (int i = 0; i < 8; i++) {
+      digitalWrite(LEDs[i], 1);
+    }
+    delay(2000);
+    for (int i = 0; i < 8; i++) {
+      digitalWrite(LEDs[i], 0);
+    }
+  }
+  else if (input == '0') {
+    Serial.println("INVALID CODE!!!");
+  }
+  else if (input == '*') {
+    Serial.println("*");
+  }
+  else if (input == '#') {
+    Serial.println("#");
+  }
+  else {
+    Serial.println("Invalid input!");
+  }
+}
+
+void try_again() {
+  // Ask the user if they want to try again
+  Serial.println("Would you like to try again? (y/n)");
+  while (Serial.available() == 0) {}
+  char answer = Serial.read();
+
+  // If the user wants to try again, clear the variables and start over
+  if (answer == 'y' || answer == 'Y' || answer == '0') {
+    displayMainMenu();
+  }
+
+  else if (answer == 'n' || answer == 'N' || answer == '1') {
+    // Otherwise, exit the program
+    Serial.println("Goodbye!");
+    //return;
+    delay(1000);
+    exit(0);
+  }
+
+  else {
+    Serial.println("Ivalid input.");
+    try_again();
+  }
+}
